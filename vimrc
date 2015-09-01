@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" CHANGE TEST
+
 " Autoreload vimrc
 :au! BufWritePost $MYVIMRC source $MYVIMRC
 
