@@ -8,11 +8,6 @@ filetype off
 " This is needed for plugin paths to work
 let $PATH=substitute($PATH, "/usr/local[^:]\\+:", "", "g")
 
-" Bind NERDTree toggle
-map <C-n> :NERDTreeToggle<CR>
-" Open NERDTree on vim start
-autocmd VimEnter * NERDTree
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -23,7 +18,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " File expolorer plugin
-Bundle 'scrooloose/nerdtree'
+" Plugin 'scrooloose/nerdtree'
+" let NERDTreeShowBookmarks=1
 
 " Auto completion plugin
 Plugin 'Valloric/YouCompleteMe'
@@ -42,6 +38,7 @@ Plugin 'kchmck/vim-coffee-script'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on

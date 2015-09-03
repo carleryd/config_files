@@ -1,7 +1,16 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" CHANGE TEST
+" Pathogen, plugin installer
+execute pathogen#infect()
+call pathogen#helptags()
+filetype plugin indent on   " Needed for Pathogen
+
+" ###   Plugins     ###
+" $$$   NERDTree
+autocmd VimEnter * NERDTree
+" Bind NERDTree toggle
+map <leader><space> :NERDTreeToggle<CR>
 
 " Autoreload vimrc
 :au! BufWritePost $MYVIMRC source $MYVIMRC
@@ -31,6 +40,10 @@ map <c-k> <c-w>k
 map <c-h> <c-w>h
 map <c-l> <c-w>l
 
+" Navigate previous and next buffer
+map <leader>j :bn<CR>
+map <leader>k :bp<CR>
+
 " Map scrolling to alt jk instead of ctrl ey
 nnoremap <D-j> <c-e>  
 nnoremap <D-k> <c-y>
@@ -56,7 +69,7 @@ set incsearch
 set showmatch
 set hlsearch
 hi Search guibg=#999999
-nmap <silent> <leader><space> :silent noh<CR>
+nmap <silent> <c-n> :silent noh<CR>
 
 " Set style of built in vim-tree :E
 let g:netrw_liststyle=3
