@@ -57,3 +57,6 @@ colorscheme molokai
 
 " CoffeeScript, appearently necessary
 filetype plugin indent on
+
+" Make YouCompleteMe check for config or something..
+let g:ycm_confirm_extra_conf = 1

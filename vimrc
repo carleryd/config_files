@@ -1,5 +1,21 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+syntax on
+
+" Set column line at width 80 characters
+set colorcolumn=80
+highlight ColorColumn ctermbg=white
+
+" Automatically read changes on disk
+set autoread
+
+" Backspace problem fix
+set backspace=indent,eol,start
+
+" let mapleader = ","
+
+" Don't create swap files
+set noswapfile
 
 " Pathogen, plugin installer
 execute pathogen#infect()
@@ -8,17 +24,16 @@ filetype plugin indent on   " Needed for Pathogen
 
 " ###   Plugins     ###
 " $$$   NERDTree
-autocmd VimEnter * NERDTree
+" autocmd VimEnter * NERDTree
 " Bind NERDTree toggle
 map <leader><space> :NERDTreeToggle<CR>
 
 " Autoreload vimrc
 :au! BufWritePost $MYVIMRC source $MYVIMRC
 
-let mapleader = ","
-
-" Activate line numbering and set its color to grey
+" Activate line numbering + relative and set its color to grey
 set number
+set relativenumber
 highlight LineNr guifg=#777777
 
 " Indents with 4 spaces instead of tabs
@@ -27,8 +42,8 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" And h to be : instead of ; so Vim-command is easier to use
-map ; :
+" d witout copy
+map <leader>d "_d
 
 " Hotkeys for creating splits
 map <c-u> :vsplit<CR>
@@ -44,12 +59,12 @@ map <c-l> <c-w>l
 map <leader>j :bn<CR>
 map <leader>k :bp<CR>
 
-" Map scrolling to alt jk instead of ctrl ey
-nnoremap <D-j> <c-e>  
-nnoremap <D-k> <c-y>
-
 " Scroll 1/2 up with f(previously 1 down)
 nnoremap <c-f> <c-u>
+
+" Scroll 1 line up and down NOT WORKING
+nnoremap ª <c-e>
+nnoremap º <c-y>
 
 " Custom <leader> mappings.
 " Open vimrc and gvimrc.
@@ -69,7 +84,7 @@ set incsearch
 set showmatch
 set hlsearch
 hi Search guibg=#999999
-nmap <silent> <c-n> :silent noh<CR>
+nmap <c-n> :noh<CR>
 
 " Set style of built in vim-tree :E
 let g:netrw_liststyle=3
