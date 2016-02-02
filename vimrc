@@ -3,8 +3,8 @@ filetype off                  " required
 syntax on
 
 " Set column line at width 80 characters
-set colorcolumn=80
-highlight ColorColumn ctermbg=white
+" set colorcolumn=80
+" highlight ColorColumn ctermbg=white
 
 " Automatically read changes on disk
 set autoread
@@ -79,6 +79,8 @@ set undofile
 set undodir=~/.vim/undo
 set clipboard=unnamed
 
+" Make searches case insensitive
+set ignorecase
 " Highlight search matches while typing.
 set incsearch
 set showmatch
