@@ -3,7 +3,7 @@ filetype off                  " required
 syntax on
 
 " Set column line at width 80 characters
-" set colorcolumn=80
+set colorcolumn=80
 " highlight ColorColumn ctermbg=white
 
 " Automatically read changes on disk
@@ -20,13 +20,14 @@ set noswapfile
 " Pathogen, plugin installer
 execute pathogen#infect()
 call pathogen#helptags()
-filetype plugin indent on   " Needed for Pathogen
+" Needed for Pathogen
+filetype plugin indent on
 
 " ###   Plugins     ###
 " $$$   NERDTree
 " autocmd VimEnter * NERDTree
 " Bind NERDTree toggle
-map <leader><space> :NERDTreeToggle<CR>
+" map <leader><space> :NERDTreeToggle<CR>
 
 " Autoreload vimrc
 :au! BufWritePost $MYVIMRC source $MYVIMRC
