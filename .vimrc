@@ -7,7 +7,7 @@ set colorcolumn=80
 " highlight ColorColumn ctermbg=white
 
 " Automatically read changes on disk
-set autoread
+"set autoread
 
 " Backspace problem fix
 set backspace=indent,eol,start
