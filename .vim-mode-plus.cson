@@ -74,8 +74,12 @@
   # 'ctrl-b': 'vim-mode-plus:scroll-full-screen-up'
   'ctrl-d': 'vim-mode-plus:scroll-half-screen-down'
   # 'ctrl-f': 'vim-mode-plus:scroll-full-screen-down'
-  'ctrl-e': 'vim-mode-plus:scroll-down'
-  'ctrl-y': 'vim-mode-plus:scroll-up'
+  # Custom, added by me
+  'ctrl-m': 'vim-mode-plus:scroll-down'
+  # 'ctrl-e': 'vim-mode-plus:scroll-down'
+  # Custom, added by me
+  'ctrl-,': 'vim-mode-plus:scroll-up'
+  # 'ctrl-y': 'vim-mode-plus:scroll-up'
 
   'z enter': 'vim-mode-plus:scroll-cursor-to-top'
   'z t':     'vim-mode-plus:scroll-cursor-to-top-leave'

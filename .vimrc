@@ -63,6 +63,12 @@ map <leader>k :bp<CR>
 " Scroll 1/2 up with f(previously 1 down)
 nnoremap <c-f> <c-u>
 
+" Scroll 1 line up(instead of c-y
+nnoremap <c-,> <c-y>
+" Scroll 1 line down(instead of c-e
+nnoremap <c-m> <c-e>
+
+
 " Scroll 1 line up and down NOT WORKING
 nnoremap ª <c-e>
 nnoremap º <c-y>
