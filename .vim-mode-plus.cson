@@ -1,3 +1,7 @@
+################################################################################
+# Config file for the Atom plugin Vim-mode-plus
+################################################################################
+
 # all
 # -------------------------
 'atom-text-editor.vim-mode-plus':
@@ -25,7 +29,7 @@
   # disabled for compatibility with the common binding for going to the end of the line
   # 'ctrl-e': 'vim-mode-plus:copy-from-line-below'
   # 'ctrl-a': 'vim-mode-plus:insert-last-inserted'
-  'ctrl-r': 'vim-mode-plus:insert-register'
+  # 'ctrl-r': 'vim-mode-plus:insert-register'
 
 # Insert-replace
 # -------------------------
@@ -36,6 +40,11 @@
 # except insert
 # -------------------------
 'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  ##################### Added for vim-mode-plus-ex-mode ########################
+  ':': 'vim-mode-plus-ex-mode:open'
+  '!': 'vim-mode-plus-ex-mode:toggle-setting'
+  ##############################################################################
+
   'h':         'vim-mode-plus:move-left'
   'left':      'vim-mode-plus:move-left'
   'backspace': 'core:move-left'
