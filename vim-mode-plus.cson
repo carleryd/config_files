@@ -195,10 +195,6 @@
   # or
   # 'ctrl-w z': 'vim-mode-plus:maximize-pane'
 
-  'm':  'vim-mode-plus:mark'
-  '`':  'vim-mode-plus:move-to-mark'
-  '\'': 'vim-mode-plus:move-to-mark-line'
-
   'f': 'vim-mode-plus:find'
   'F': 'vim-mode-plus:find-backwards'
   't': 'vim-mode-plus:till'
