@@ -1,0 +1,27 @@
+[user]
+	name = Christofer Ärleryd
+	email = c.arleryd@gmail.com
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[ui]
+	color = true
+[push]
+	default = simple
+[core]
+	editor = vim
+	excludesfile = /Users/christoferarleryd/.gitignore_global
+[color]
+	ui = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+    acm = !git add -A && git commit -m
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
