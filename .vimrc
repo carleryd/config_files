@@ -3,7 +3,7 @@ filetype off                  " required
 syntax on
 
 " Set column line at width 80 characters
-set colorcolumn=80
+" set colorcolumn=80
 " highlight ColorColumn ctermbg=white
 
 " Automatically read changes on disk
