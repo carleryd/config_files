@@ -9,6 +9,9 @@ syntax on
 " Automatically read changes on disk
 "set autoread
 
+" Enable or disable Flow type checking
+let g:flow#enable = 0
+
 " Backspace problem fix
 set backspace=indent,eol,start
 
@@ -27,7 +30,22 @@ filetype plugin indent on
 " $$$   NERDTree
 " autocmd VimEnter * NERDTree
 " Bind NERDTree toggle
-" map <leader><space> :NERDTreeToggle<CR>
+map <leader><space> :NERDTreeToggle<CR>
+
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Autoreload vimrc
 :au! BufWritePost $MYVIMRC source $MYVIMRC
@@ -57,8 +75,8 @@ map <c-h> <c-w>h
 map <c-l> <c-w>l
 
 " Navigate previous and next buffer
-map <leader>j :bn<CR>
-map <leader>k :bp<CR>
+map <leader>h :bn<CR>
+map <leader>l :bp<CR>
 
 " Scroll 1/2 up with f(previously 1 down)
 nnoremap <c-f> <c-u>
@@ -75,8 +93,8 @@ nnoremap º <c-y>
 
 " Custom <leader> mappings.
 " Open vimrc and gvimrc.
-nnoremap <leader>ev :e $MYVIMRC<CR>
-nnoremap <leader>eg :e $MYGVIMRC<CR>
+nnoremap <leader>ov :e $MYVIMRC<CR>
+nnoremap <leader>og :e $MYGVIMRC<CR>
 
 " Center window vertically on current marker placement
 nnoremap <space> zz
