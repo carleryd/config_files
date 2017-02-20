@@ -1,21 +1,13 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 syntax on
+hi Comment ctermfg=LightBlue
 
-" Set column line at width 80 characters
-" set colorcolumn=80
-" highlight ColorColumn ctermbg=white
-
-" Automatically read changes on disk
-"set autoread
-
-" Enable or disable Flow type checking
-let g:flow#enable = 0
+" Syntax
+au BufReadPost *.html.eex set syntax=html " Enable html syntax highlighting on all *html.eex files
 
 " Backspace problem fix
 set backspace=indent,eol,start
-
-" let mapleader = ","
 
 " Don't create swap files
 set noswapfile
@@ -26,11 +18,16 @@ call pathogen#helptags()
 " Needed for Pathogen
 filetype plugin indent on
 
+syntax enable
+
 " ###   Plugins     ###
 " $$$   NERDTree
 " autocmd VimEnter * NERDTree
+" Do not open NERDTree directory listing on startup
+let g:NERDTreeHijackNetrw=0
 " Bind NERDTree toggle
 map <leader><space> :NERDTreeToggle<CR>
+hi Directory guifg=#FF0000 ctermfg=green
 
 " The Silver Searcher
 if executable('ag')
@@ -53,7 +50,7 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Activate line numbering + relative and set its color to grey
 set number
 set relativenumber
-highlight LineNr guifg=#777777
+" highlight LineNr guifg=#777777
 
 " Indents with 4 spaces instead of tabs
 filetype plugin indent on
