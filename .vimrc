@@ -3,6 +3,25 @@ filetype off                  " required
 syntax on
 hi Comment ctermfg=LightBlue
 
+" Make vim-jsx work in .js files
+let g:jsx_ext_required = 0
+
+" Stop flow lint to run on save
+let g:flow#enable = 0
+
+" CtrlP ignores same files as git from .gitignore
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" ###   BUFFERS   ###
+" Open buffer menu
+nnoremap <leader>b :CtrlPBuffer<CR>
+" Open most recently used files
+nnoremap <leader>f :CtrlPMRUFiles<CR>
+" Navigate previous and next buffer
+map <leader>h :bn<CR>
+map <leader>l :bp<CR>
+
+
 " Syntax
 au BufReadPost *.html.eex set syntax=html " Enable html syntax highlighting on all *html.eex files
 
@@ -24,6 +43,7 @@ syntax enable
 " $$$   NERDTree
 " autocmd VimEnter * NERDTree
 " Do not open NERDTree directory listing on startup
+let NERDTreeShowHidden=1
 let g:NERDTreeHijackNetrw=0
 " Bind NERDTree toggle
 map <leader><space> :NERDTreeToggle<CR>
@@ -52,10 +72,10 @@ set number
 set relativenumber
 " highlight LineNr guifg=#777777
 
-" Indents with 4 spaces instead of tabs
+" Indents with 2 spaces instead of tabs
 filetype plugin indent on
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " d witout copy
@@ -70,10 +90,6 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-h> <c-w>h
 map <c-l> <c-w>l
-
-" Navigate previous and next buffer
-map <leader>h :bn<CR>
-map <leader>l :bp<CR>
 
 " Scroll 1/2 up with f(previously 1 down)
 nnoremap <c-f> <c-u>
