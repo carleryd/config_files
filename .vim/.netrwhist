@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin/src/routes/CollectiveAgreements'
+let g:netrw_dirhist_2='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin'
+let g:netrw_dirhist_3='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin/src/routes/CollectiveAgreements'
+let g:netrw_dirhist_4='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin/src/routes/CollectiveAgreements/components'
+let g:netrw_dirhist_5='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin/src/routes/CollectiveAgreements/components/paragraph'
+let g:netrw_dirhist_6='/Users/christoferarleryd/Programming/Aventyret/arbetsgivarguiden-admin'
