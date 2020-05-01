@@ -1,27 +1,8 @@
-source ~/.bashrc
-
-# Add bash-completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
-fi
+# Global packages with yarn
+export PATH="$PATH:$(yarn global bin)"
 
 # Set default editor
-export EDITOR=/usr/local/bin/nvim
-
-
-# Setting PATH for Python 2.7
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-
-# Needed for dinghy, Docker stuff
-#export DOCKER_HOST=tcp://192.168.99.110:2376
-#export DOCKER_MACHINE_NAME=default
-#export DOCKER_TLS_VERIFY=1
-#export DOCKER_CERT_PATH=/Users/christoferarleryd/.docker/machine/machines/default
-
-# vim and gvim(macvim) environmental variables
-MYVIMRC="~/.vimrc"
-MYGVIMRC="~/.gvimrc"
+export EDITOR=/usr/local/bin/vim
 
 # Set color scheme for terminal
 export CLICOLOR=1
@@ -31,54 +12,55 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # \[\033[01;32m\] sets the following to green(\h, host)
 export PS1="\[\033[01;32m\]\h\[\033[00m\] \[\033[01;34m\]\W \$\[\033[00m\] "
 alias ls='ls ${LS_OPTS}'
-
-alias ahead='cd /Users/christoferarleryd/Programming/Ahead/'
-alias aelm='cd /Users/christoferarleryd/Programming/Ahead/ahead_web/web/static/elm/src/'
 alias killwebpack='kill $(ps aux | grep webpack | awk "{print $2}")'
-alias elmweb='cd /Users/christoferarleryd/Programming/Ahead/elm_website'
-alias aweb='cd /Users/christoferarleryd/Programming/Ahead/ahead_web'
-alias awebelm='cd /Users/christoferarleryd/Programming/Ahead/ahead_web/web/static/elm'
-alias awebdb='cd /Users/christoferarleryd/Programming/Ahead/ahead_web/web/static/elm/src/DB'
-alias amob='cd /Users/christoferarleryd/Programming/Ahead/ahead_mobile'
-alias adep='cd /Users/christoferarleryd/Programming/Ahead/ahead_deployment'
 alias prog='cd ~/Programming'
 alias dev='cd ~/Development'
 alias drop='cd ~/Dropbox'
 alias drive='cd ~/Google\ Drive'
-alias prolog='cd /Applications/JIProlog/'
+alias dplay='cd ~/Programming/discovery/dplay-nordics-web'
+alias luna='cd ~/Programming/discovery/luna_web'
 alias sbp='source ~/.bash_profile'
 alias vbp='vim ~/.bash_profile'
 alias svim='source ~/.vimrc'
 alias vvim='vim ~/.vimrc'
 alias sgvim='source ~/.gvimrc'
 alias vgvim='vim ~/.gvimrc'
-alias vim='/usr/local/bin/nvim'
-alias vtmuxconf='vim ~/.tmux.conf'
-alias stmuxconf='tmux source-file ~/.tmux.conf'
 alias so='source'
-alias mvim='~/Applications/macvim/src/MacVim/mvim'
-alias epi='elm package install -y'
+# GIT aliases
+alias gs='git status'
+alias gco='git checkout'
+alias gcom='git commit'
 alias gittagstamps='git log --tags --simplify-by-decoration --pretty="format:%ai %d"'
 alias gitcurrentbranch='git rev-parse --abbrev-ref HEAD | tr -d "\n"'
 alias gitdiffdevelop='git diff --name-status origin/develop..$(gitcurrentbranch)'
+alias gprevbr='git reflog | grep -o "checkout: moving from .* to " | sed -e "s/checkout: moving from //" -e "s/ to $//" | head -20'
 
+alias signal='signal-desktop >/dev/null &'
+alias turtl="sudo bash -c 'turtl &'"
+alias postman="~/.Postman/Postman &"
+alias fix-mouse="sudo modprobe -r psmouse & sudo modprobe psmouse"
+alias rotate-normal='xrandr --output eDP-1 --rotate normal'
+alias rotate-inverted='xrandr --output eDP-1 --rotate inverted'
+alias rotate-left='xrandr --output eDP-1 --rotate left'
+alias rotate-right='xrandr --output eDP-1 --rotate right'
+alias hibernate='sudo systemctl hibernate'
+alias suspend='sudo systemctl suspend'
+alias scale-1.0='gsettings set org.gnome.desktop.interface text-scaling-factor 1.0'
+alias scale-1.1='gsettings set org.gnome.desktop.interface text-scaling-factor 1.1'
+alias scale-1.2='gsettings set org.gnome.desktop.interface text-scaling-factor 1.2'
+alias scale-1.3='gsettings set org.gnome.desktop.interface text-scaling-factor 1.3'
+alias scale-1.4='gsettings set org.gnome.desktop.interface text-scaling-factor 1.4'
+alias scale-1.5='gsettings set org.gnome.desktop.interface text-scaling-factor 1.5'
+alias ashake='~/Development/shake.sh'
 
-# Get your local IP
-COMMAND=$(/sbin/ifconfig en0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}')
-alias getip="echo $COMMAND"
+alias kill8989='kill -9 $(lsof -ti tcp:8989)'
 
 # Commit and push config files
 alias update_conf='
-    git --git-dir=/Users/christoferarleryd/Programming/config_files/.git --work-tree=/Users/christoferarleryd/Programming/config_files add --all &&
-    git --git-dir=/Users/christoferarleryd/Programming/config_files/.git --work-tree=/Users/christoferarleryd/Programming/config_files commit -m "Update config files" &&
-    git --git-dir=/Users/christoferarleryd/Programming/config_files/.git --work-tree=/Users/christoferarleryd/Programming/config_files push
+    git --git-dir=~/Programming/other/config_files/.git --work-tree=~/Programming/other/config_files add --all &&
+    git --git-dir=~/Programming/other/config_files/.git --work-tree=~/Programming/other/config_files commit -m "Update config files" &&
+    git --git-dir=~/Programming/other/config_files/.git --work-tree=~/Programming/other/config_files push
 '
-
-alias fixreact1='react-native start > /dev/null 2>&1 &'
-alias fixreact2='adb reverse tcp:8081 tcp:8081'
-# React Native: Change ip sent to device to current localhost NO WORK
-alias fixreactlocalhost='/Users/christoferarleryd/Programming/bash_scripts/fixreactlocalhost.sh'
-
 
 ##### Terminal management   #####
     #   Change size         #
@@ -97,32 +79,11 @@ alias t8='printf "\e[3;586;631t"'
 alias t9='printf "\e[3;1172;631t"'
     #   Misc                #
 alias tsleep='printf "\e[2t" && sleep 3 && printf "\e[1t"'
+if [ -e /home/chryd/.nix-profile/etc/profile.d/nix.sh ]; then . /home/chryd/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-# Exports needed for Cocos2d-JS
-export ANT_ROOT=/Users/christoferarleryd/Development/apache-ant-1.9.5/bin
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
-
-# MacPorts Installer addition on 2014-09-06_at_12:38:50: adding an appropriate PATH variable for use with MacPorts.
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-# Finished adapting your PATH environment variable for use with MacPorts.
-
-
-# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/christoferarleryd/Development/cocos2d-js-v3.6.1/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
-
-# Add environment variable NDK_ROOT for cocos2d-x
-export NDK_ROOT=/Users/christoferarleryd/Development/android-ndk-r10c
-export PATH=$NDK_ROOT:$PATH
-
-# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-export ANDROID_HOME=/Users/christoferarleryd/Development/android-sdk-macosx
-export ANDROID_SDK_ROOT=/Users/christoferarleryd/Development/android-sdk-macosx
-export PATH=$ANDROID_SDK_ROOT:$PATH
-export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-source ~/.git-completion.bash
+# ANDROID CONFIGURATION
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools

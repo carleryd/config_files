@@ -15,10 +15,9 @@
 	ui = true
 [alias]
 	co = checkout
-	br = branch
+	b = branch
 	ci = commit
-	st = status
-    acm = !git add -A && git commit -m
+	s = status
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
