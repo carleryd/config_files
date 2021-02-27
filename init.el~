@@ -10,7 +10,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (rainbow-mode yaml-mode web-mode use-package tide solidity-mode purescript-mode psc-ide prettier-js php-mode nix-mode neotree moe-theme js3-mode indium helm-projectile helm-ag haskell-mode go-mode gnugo exec-path-from-shell evil-surround evil-numbers evil-magit evil-leader evil-escape evil-commentary elm-mode editorconfig centered-window alchemist ag add-node-modules-path global-flycheck-mode))))
+    (flycheck-inline rainbow-mode yaml-mode web-mode use-package tide solidity-mode purescript-mode psc-ide prettier-js php-mode nix-mode neotree moe-theme js3-mode indium helm-projectile helm-ag haskell-mode go-mode gnugo exec-path-from-shell evil-surround evil-numbers evil-magit evil-leader evil-escape evil-commentary elm-mode editorconfig centered-window alchemist ag add-node-modules-path))))
 
 ;; Set Emacs window title to current buffer path
 (setq-default frame-title-format
@@ -177,6 +177,8 @@
   :mode ("\\.ya?ml\\'" . yaml-mode))
 (use-package flycheck
   :ensure t)
+(use-package flycheck-inline
+  :ensure t)
 (use-package exec-path-from-shell
   :ensure t)
 (use-package tide
@@ -268,8 +270,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up hooks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'auto-mode-alist '("components\\/.*\\.css\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("components\\/.*\\.scss\\'" . scss-mode))
 (setq-default indent-tabs-mode nil)
 
 (defun typescript-indent-hook ()
@@ -357,8 +361,7 @@
     (evil-define-key 'normal package-menu-mode-map (kbd "x") #'package-menu-execute)))
 
 (with-eval-after-load 'flycheck
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-)
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ### OTHER STUFF ###
@@ -366,13 +369,6 @@
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; ~~~ [[ General ]] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-;; Linting .tsx
-
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
-(setq auto-mode-alist (append '(("\\.css$" . css-mode)) auto-mode-alist))
-(autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
-
 
 ;; Disable tool bar
 (tool-bar-mode -1)
@@ -408,6 +404,9 @@
 
 ;; formats the buffer before saving
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; Linting .tsx
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; ~~~ [[ Org Mode ]] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
