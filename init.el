@@ -1,16 +1,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Run on startup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-undo-system (quote undo-tree))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(package-archives
+   (quote
+    (("org" . "http://orgmode.org/elpa/")
+     ("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.org/packages/")
+     ("melpa-stable" . "http://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (rainbow-mode yaml-mode web-mode use-package tide solidity-mode purescript-mode psc-ide prettier-js php-mode nix-mode neotree moe-theme js3-mode indium helm-projectile helm-ag haskell-mode go-mode gnugo exec-path-from-shell evil-surround evil-numbers evil-magit evil-leader evil-escape evil-commentary elm-mode editorconfig centered-window alchemist ag add-node-modules-path global-flycheck-mode))))
+    (evil-collection gnu-elpa-keyring-update format-all rainbow-mode yaml-mode web-mode use-package tide solidity-mode purescript-mode psc-ide prettier-js php-mode nix-mode neotree moe-theme js3-mode indium helm-projectile helm-ag go-mode gnugo exec-path-from-shell evil-surround evil-numbers evil-leader evil-escape evil-commentary elm-mode editorconfig centered-window alchemist ag add-node-modules-path global-flycheck-mode))))
 
 ;; Set Emacs window title to current buffer path
 (setq-default frame-title-format
@@ -20,17 +26,19 @@
 ;; Hide toolbar
 (menu-bar-mode -1)
 
+;; Set before lsp-mode initializes to resolve https://github.com/emacs-lsp/lsp-mode/issues/2435
+(setq lsp-headerline-breadcrumb-enable nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
 (use-package evil
   :ensure t
   :config
@@ -72,29 +80,30 @@
   (use-package evil-numbers
     :ensure t)
 
-  (use-package evil-magit
-    :ensure t
-    :config
-    (evil-define-key 'normal magit-mode-map (kbd "C-h") 'windmove-left)
-    (evil-define-key 'normal magit-mode-map (kbd "C-l") 'windmove-right)
-    (evil-define-key 'normal magit-mode-map (kbd "C-k") 'windmove-up)
-    (evil-define-key 'normal magit-mode-map (kbd "C-j") 'windmove-down)
-    (evil-define-key 'normal magit-mode-map (kbd "SPC") 'evil-scroll-line-to-center)
-    (evil-define-key 'normal magit-mode-map (kbd "C-[") 'evil-escape)
-    (evil-define-key 'normal magit-mode-map (kbd "C-c d") 'magit-discard)
-    (setq magit-display-buffer-function
-          (lambda (buffer)
-            (display-buffer
-             buffer (if (and (derived-mode-p 'magit-mode)
-                             (memq (with-current-buffer buffer major-mode)
-                                   '(magit-process-mode
-                                     magit-revision-mode
-                                     magit-diff-mode
-                                     magit-stash-mode
-                                     magit-status-mode)))
-                        nil
-                      '(display-buffer-same-window)))))
-    )
+  ;; TODO: This package was removed and folded into evil collection. These bindings need to be set there.
+  ;; (use-package evil-magit
+  ;;   :ensure t
+  ;;   :config
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-h") 'windmove-left)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-l") 'windmove-right)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-k") 'windmove-up)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-j") 'windmove-down)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "SPC") 'evil-scroll-line-to-center)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-[") 'evil-escape)
+  ;;   (evil-define-key 'normal magit-mode-map (kbd "C-c d") 'magit-discard)
+  ;;   (setq magit-display-buffer-function
+  ;;         (lambda (buffer)
+  ;;           (display-buffer
+  ;;            buffer (if (and (derived-mode-p 'magit-mode)
+  ;;                            (memq (with-current-buffer buffer major-mode)
+  ;;                                  '(magit-process-mode
+  ;;                                    magit-revision-mode
+  ;;                                    magit-diff-mode
+  ;;                                    magit-stash-mode
+  ;;                                    magit-status-mode)))
+  ;;                       nil
+  ;;                     '(display-buffer-same-window)))))
+  ;;   )
 
   (use-package evil-commentary
     :ensure t
@@ -198,6 +207,8 @@
        )
     )
   :ensure t)
+(use-package format-all
+  :ensure t)
 (use-package helm-ag
   :ensure t)
 
@@ -220,8 +231,10 @@
     (turn-on-purescript-indentation)))
   (setq psc-ide-use-npm-bin t)
   :ensure t)
+
 (use-package haskell-mode
   :ensure t)
+
 (use-package elm-mode
   :ensure t)
 (use-package centered-window
@@ -244,26 +257,33 @@
   :ensure t
   :mode ("\\.css\\'" . rainbow-mode))
 
+;; Installed this for usage with lsp-haskell and haskell-language-server
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (haskell-mode . lsp)
+         )
+  :commands lsp)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Require Installed Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; (require 'helm-config)
-; (require 'evil)
-; (require 'evil-numbers)
-; (require 'js3-mode)
-; (require 'web-mode)
-; ;(require 'rjsx-mode)
-; (require 'flycheck)
-; ;(require 'flow-minor-mode)
-; (require 'exec-path-from-shell)
-; (require 'tide)
-; (require 'alchemist)
-; (require 'php-mode)
-; (require 'magit)
-; (require 'evil-magit)
-; (require 'prettier-js)
-; (require 'solidity-mode)
+(require 'use-package)
+(require 'helm-config)
+(require 'evil)
+(require 'evil-numbers)
+(require 'flycheck)
+(require 'exec-path-from-shell)
+(require 'tide)
+(require 'alchemist)
 (require 'psc-ide)
+(require 'lsp)
+(require 'lsp-haskell)
+;; Required for C-r to work, I think because `evil-mode` uses undo-tree mode
+(require 'undo-tree)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up hooks
@@ -278,6 +298,24 @@
 )
 (add-hook 'typescript-mode-hook 'typescript-indent-hook)
 (add-hook 'after-init-hook '(lambda () (load-theme 'deeper-blue)))
+
+(defun emacs-init-hook ()
+  ;; (global-undo-tree-mode)
+)
+(add-hook 'after-init-hook 'emacs-init-hook)
+
+(defun haskell-init ()
+  ;; Triggers formatting on save
+  (format-all-ensure-formatter)
+  (format-all-mode)
+)
+(add-hook 'haskell-mode-hook 'haskell-init)
+;; Ensure lsp-mode is triggered when haskell-mode major mode is entered
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+
+;; Required for C-r to work, related to `evil` package
+(add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
@@ -328,6 +366,24 @@
 (define-key evil-visual-state-map (kbd "C-m") 'scroll-down-one-line)
 (evil-define-key 'normal magit-mode-map (kbd "C-d") 'scroll-up-half)
 (evil-define-key 'normal magit-mode-map (kbd "C-f") 'scroll-down-half)
+
+;; BEGIN - Make haskell-mode newline correctly indent
+(defun haskell-evil-open-above ()
+  (interactive)
+  (evil-digit-argument-or-evil-beginning-of-line)
+  (haskell-indentation-newline-and-indent)
+  (evil-previous-line)
+  (haskell-indentation-indent-line)
+  (evil-append-line nil))
+
+(defun haskell-evil-open-below ()
+  (interactive)
+  (evil-append-line nil)
+  (haskell-indentation-newline-and-indent))
+
+(evil-define-key 'normal haskell-mode-map "o" 'haskell-evil-open-below
+  "O" 'haskell-evil-open-above)
+;; END
 
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
