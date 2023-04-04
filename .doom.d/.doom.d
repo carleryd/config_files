@@ -1,0 +1,1 @@
+/Users/jackjazz/.doom.d

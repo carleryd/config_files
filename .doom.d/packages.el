@@ -11,6 +11,13 @@
 (package! centered-window)
 (package! evil-commentary)
 (package! psc-ide)
+(package! exec-path-from-shell)
+(package! prettier-js)
+(package! rainbow-mode)
+(package! prisma-mode :recipe (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))
+(package! flycheck-inline)
+;; (package! copilot
+;;   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
